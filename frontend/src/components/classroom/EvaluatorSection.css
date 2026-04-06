@@ -1,0 +1,218 @@
+.evaluator-section {
+  padding: 30px;
+}
+
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 40px;
+}
+
+.header-info h2 {
+  font-size: 1.8rem;
+  font-family: 'Outfit', sans-serif;
+  margin-bottom: 8px;
+}
+
+.header-info p {
+  color: #94a3b8;
+  font-size: 0.95rem;
+}
+
+.assignment-selector {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: rgba(30, 41, 59, 0.4);
+  padding: 10px 18px;
+  border-radius: 14px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.assignment-selector select {
+  background: transparent;
+  border: none;
+  color: #fff;
+  font-size: 0.95rem;
+  outline: none;
+}
+
+/* Student View */
+.feedback-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
+.personal-feedback-card {
+  background: rgba(30, 41, 59, 0.3);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 28px;
+  padding: 40px;
+}
+
+.card-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  padding-bottom: 20px;
+}
+
+.assignment-meta {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.assignment-meta h3 {
+  font-size: 1.4rem;
+  font-family: 'Outfit', sans-serif;
+}
+
+.radial-score {
+  width: 64px;
+  height: 64px;
+  background: rgba(79, 172, 254, 0.1);
+  border: 4px solid #4facfe;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+  color: #4facfe;
+}
+
+.feedback-details {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
+.overall-summary {
+  background: rgba(79, 172, 254, 0.05);
+  padding: 20px;
+  border-radius: 16px;
+  border-left: 4px solid #4facfe;
+  display: flex;
+  gap: 15px;
+  line-height: 1.6;
+  color: #f1f5f9;
+}
+
+.feedback-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+.feedback-column {
+  background: rgba(15, 23, 42, 0.3);
+  padding: 20px;
+  border-radius: 18px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.feedback-column h4 {
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  margin-bottom: 15px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.feedback-column ul {
+  padding-left: 18px;
+  color: #94a3b8;
+  font-size: 0.9rem;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.card-footer {
+  margin-top: 30px;
+  padding-top: 15px;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+  color: #475569;
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+/* Teacher List View */
+.submissions-vertical-list {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.sub-expansion-card {
+  background: rgba(30, 41, 59, 0.3);
+  border-radius: 18px;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.sub-main-row {
+  padding: 18px 25px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.sub-main-row:hover {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.sub-user-cell {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-weight: 600;
+}
+
+.user-icon {
+  width: 32px;
+  height: 32px;
+  background: rgba(148, 163, 184, 0.1);
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.sub-score-cell {
+  background: rgba(79, 172, 254, 0.1);
+  color: #4facfe;
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.sub-expansion-card .feedback-details {
+  padding: 30px;
+  background: rgba(15, 23, 42, 0.2);
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+  animation: slideDown 0.3s ease-out;
+}
+
+@keyframes slideDown {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.loading-state, .empty-state {
+  text-align: center;
+  padding: 60px 0;
+  color: #475569;
+}

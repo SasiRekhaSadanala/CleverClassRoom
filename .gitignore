@@ -1,0 +1,53 @@
+# Node
+node_modules/
+dist/
+dist-ssr/
+*.local
+
+# Python
+backend/venv/
+backend/__pycache__/
+backend/*.pyc
+backend/*.pyo
+backend/*.pyd
+backend/.Python
+backend/env/
+backend/pip-log.txt
+backend/pip-delete-this-directory.txt
+backend/develop-eggs/
+backend/dist/
+backend/downloads/
+backend/eggs/
+backend/.eggs/
+backend/lib/
+backend/lib64/
+backend/parts/
+backend/sdist/
+backend/var/
+backend/wheels/
+backend/share/python-wheels/
+backend/*.egg-info/
+backend/.installed.cfg
+backend/*.egg
+backend/MANIFEST
+
+# Databases & Vector Stores
+backend/*.db
+backend/faiss_store/
+backend/uploaded_docs/
+
+# IDEs
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Environment Variables
+.env
+backend/.env
+frontend/.env
+frontend/.env*.local
+
+# System Files
+.DS_Store
+Thumbs.db
