@@ -8,10 +8,10 @@ import {
   Star, 
   Target, 
   Lightbulb, 
-  MessageSquare,
   TrendingUp,
   User,
-  GraduationCap
+  GraduationCap,
+  BarChart2
 } from 'lucide-react';
 import './EvaluatorSection.css';
 
@@ -57,6 +57,12 @@ const EvaluatorSection = ({ classroomId, isTeacher, classroom }) => {
     const id = e.target.value;
     setSelectedAssignmentId(id);
     fetchClassSubmissions(id);
+  };
+
+  const getScoreColor = (score) => {
+    if (score >= 90) return '#22c55e'; // Green
+    if (score >= 70) return '#facc15'; // Yellow
+    return '#ef4444'; // Red
   };
 
   const renderFeedback = (feedback) => {
@@ -130,7 +136,24 @@ const EvaluatorSection = ({ classroomId, isTeacher, classroom }) => {
         ) : submissions.length === 0 ? (
           <div className="empty-state">No submissions found for this assignment.</div>
         ) : (
-          <div className="submissions-vertical-list">
+          <>
+            <div className="assignment-stats-ribbon" style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '15px', marginBottom: '25px' }}>
+              <div className="stat-card" style={{ background: 'rgba(255,255,255,0.03)', padding: '15px', borderRadius: '12px', border: '1px solid rgba(255,255,255,0.05)', textAlign: 'center' }}>
+                <span style={{ display: 'block', fontSize: '0.75rem', color: '#94a3b8', textTransform: 'uppercase', marginBottom: '5px' }}>Class Average</span>
+                <span style={{ fontSize: '1.5rem', fontWeight: 700, color: getScoreColor(submissions.reduce((acc, s) => acc + s.score, 0) / submissions.length) }}>
+                  {Math.round(submissions.reduce((acc, s) => acc + s.score, 0) / submissions.length)}%
+                </span>
+              </div>
+              <div className="stat-card" style={{ background: 'rgba(255,255,255,0.03)', padding: '15px', borderRadius: '12px', border: '1px solid rgba(255,255,255,0.05)', textAlign: 'center' }}>
+                <span style={{ display: 'block', fontSize: '0.75rem', color: '#94a3b8', textTransform: 'uppercase', marginBottom: '5px' }}>Participants</span>
+                <span style={{ fontSize: '1.5rem', fontWeight: 700, color: '#4facfe' }}>{submissions.length}</span>
+              </div>
+              <div className="stat-card" style={{ background: 'rgba(255,255,255,0.03)', padding: '15px', borderRadius: '12px', border: '1px solid rgba(255,255,255,0.05)', textAlign: 'center' }}>
+                <span style={{ display: 'block', fontSize: '0.75rem', color: '#94a3b8', textTransform: 'uppercase', marginBottom: '5px' }}>Highest Grade</span>
+                <span style={{ fontSize: '1.5rem', fontWeight: 700, color: '#22c55e' }}>{Math.max(...submissions.map(s => s.score))}%</span>
+              </div>
+            </div>
+            <div className="submissions-vertical-list">
             {submissions.map((sub, idx) => (
               <div key={idx} className="sub-expansion-card">
                 <div 
@@ -143,14 +166,15 @@ const EvaluatorSection = ({ classroomId, isTeacher, classroom }) => {
                   </div>
                   <div className="sub-score-cell">
                     <TrendingUp size={16} />
-                    <span>{sub.score}%</span>
+                    <span style={{ color: getScoreColor(sub.score), fontWeight: 700 }}>{sub.score}%</span>
                   </div>
                   {expandedId === idx ? <ChevronUp /> : <ChevronDown />}
                 </div>
                 {expandedId === idx && renderFeedback(sub.feedback)}
               </div>
             ))}
-          </div>
+            </div>
+          </>
         )}
       </div>
     );
@@ -180,7 +204,13 @@ const EvaluatorSection = ({ classroomId, isTeacher, classroom }) => {
                   <h3>{sub.assignment_title}</h3>
                 </div>
                 <div className="radial-score">
-                  <span className="score-val">{sub.score}%</span>
+                  <span className="score-val" style={{ color: getScoreColor(sub.score) }}>{sub.score}%</span>
+                  {sub.class_average && (
+                    <div className="avg-comparison" style={{ fontSize: '0.7rem', color: '#94a3b8', marginTop: '4px', textAlign: 'center' }}>
+                      <BarChart2 size={10} style={{ marginRight: '3px' }} />
+                      Class Avg: {sub.class_average}%
+                    </div>
+                  )}
                 </div>
               </div>
               <div className="card-body">

@@ -15,8 +15,6 @@ from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 from jose import JWTError, jwt
 
 # Create DB tables
-# REMOVE AFTER FIRST RUN
-models.Base.metadata.drop_all(bind=database.engine)
 models.Base.metadata.create_all(bind=database.engine)
 
 app = FastAPI(title="AI Student Mentor API")
@@ -391,13 +389,22 @@ def get_my_submissions(
         models.Submission.student_id == user.id
     ).all()
     
-    return [{
-        "assignment_id": s.assignment_id,
-        "assignment_title": s.assignment.title,
-        "score": s.score,
-        "feedback": s.feedback,
-        "submitted_at": s.submitted_at
-    } for s in submissions]
+    result = []
+    for s in submissions:
+        # Calculate class average for this assignment
+        avg_score = db.query(models.Submission.score).filter(models.Submission.assignment_id == s.assignment_id).all()
+        class_avg = sum([score[0] for score in avg_score]) / len(avg_score) if avg_score else 0
+        
+        result.append({
+            "assignment_id": s.assignment_id,
+            "assignment_title": s.assignment.title,
+            "score": s.score,
+            "feedback": s.feedback,
+            "submitted_at": s.submitted_at,
+            "class_average": round(class_avg, 1)
+        })
+    
+    return result
 
 @app.get("/api/classrooms/{classroom_id}/notes")
 def get_notes(

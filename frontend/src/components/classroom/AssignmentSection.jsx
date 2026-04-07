@@ -203,15 +203,55 @@ const AssignmentSection = ({ classroomId, isTeacher }) => {
                     <div style={{ color: '#22c55e', fontSize: '0.9rem', display: 'flex', alignItems: 'center', gap: '8px' }}><CheckCircle size={18} /> Verified by AI Instructor</div>
                   </div>
                   <div className="mistake-analysis">
-                    <p style={{ marginBottom: '15px' }}><strong><HelpCircle size={14} /> Key Improvement Areas:</strong></p>
-                    {submissionResult.feedback.mistakes?.map((m, i) => (
-                      <div key={i} className="mistake-tag" style={{ background: 'rgba(239, 68, 68, 0.1)', color: '#ef4444', padding: '12px', borderRadius: '10px', marginBottom: '10px', border: '1px solid rgba(239, 68, 68, 0.1)' }}>
-                        <strong>Point {i+1}:</strong> {m}
+                    <div className="feedback-summary mb-4">
+                      <p style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '10px' }}>
+                        <MessageSquare size={16} color="#4facfe" /> 
+                        <strong>Instructor's Overall Feedback:</strong>
+                      </p>
+                      <p style={{ fontSize: '0.95rem', color: '#cbd5e1', lineHeight: '1.6', background: 'rgba(255,255,255,0.03)', padding: '15px', borderRadius: '12px', border: '1px solid rgba(255,255,255,0.05)' }}>
+                        {submissionResult.feedback.overall || "Great work on this assignment!"}
+                      </p>
+                    </div>
+
+                    <div style={{ display: 'grid', gridTemplateColumns: '1fr', gap: '15px' }}>
+                      <div className="feedback-group">
+                        <p style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '8px', color: '#facc15', fontSize: '0.9rem' }}>
+                          <Star size={14} /> <strong>Key Strengths</strong>
+                        </p>
+                        <ul style={{ listStyle: 'none', padding: 0, margin: 0 }}>
+                          {(submissionResult.feedback.strengths || ["Well-structured content"]).map((s, i) => (
+                            <li key={i} style={{ fontSize: '0.85rem', color: '#94a3b8', marginBottom: '4px', paddingLeft: '20px', position: 'relative' }}>
+                              <span style={{ position: 'absolute', left: 0, color: '#facc15' }}>•</span> {s}
+                            </li>
+                          ))}
+                        </ul>
                       </div>
-                    ))}
-                    <div className="ai-explanation" style={{ background: 'rgba(255,255,255,0.03)', padding: '20px', borderRadius: '15px', marginTop: '20px', border: '1px solid rgba(255,255,255,0.05)' }}>
-                       <p style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '10px' }}><strong><BarChart2 size={14} /> AI Contextual Explanation:</strong></p>
-                       <p style={{ fontSize: '0.95rem', color: '#cbd5e1', lineHeight: '1.6' }}>{submissionResult.feedback.detailed_explanation || submissionResult.feedback.explanation}</p>
+
+                      <div className="feedback-group">
+                        <p style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '8px', color: '#ef4444', fontSize: '0.9rem' }}>
+                          <Target size={14} /> <strong>Areas for Improvement</strong>
+                        </p>
+                        <ul style={{ listStyle: 'none', padding: 0, margin: 0 }}>
+                          {(submissionResult.feedback.improvements || ["None identified"]).map((im, i) => (
+                            <li key={i} style={{ fontSize: '0.85rem', color: '#94a3b8', marginBottom: '4px', paddingLeft: '20px', position: 'relative' }}>
+                              <span style={{ position: 'absolute', left: 0, color: '#ef4444' }}>•</span> {im}
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+
+                      <div className="feedback-group">
+                        <p style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '8px', color: '#22c55e', fontSize: '0.9rem' }}>
+                          <Lightbulb size={14} /> <strong>Future Suggestions</strong>
+                        </p>
+                        <ul style={{ listStyle: 'none', padding: 0, margin: 0 }}>
+                          {(submissionResult.feedback.suggestions || ["Keep up the great work!"]).map((su, i) => (
+                            <li key={i} style={{ fontSize: '0.85rem', color: '#94a3b8', marginBottom: '4px', paddingLeft: '20px', position: 'relative' }}>
+                              <span style={{ position: 'absolute', left: 0, color: '#22c55e' }}>•</span> {su}
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
                     </div>
                   </div>
                   <button onClick={() => setSubmissionResult(null)} style={{ background: 'transparent', border: 'none', color: '#4facfe', marginTop: '15px', cursor: 'pointer', fontWeight: 600 }}>Dismiss Feedback</button>

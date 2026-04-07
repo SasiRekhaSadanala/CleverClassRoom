@@ -16,6 +16,28 @@ const MembersSection = ({ classroomId, classroom }) => {
     return name.split(' ').map(n => n[0]).join('').toUpperCase().substring(0, 2);
   };
 
+  const stringToColor = (str) => {
+    let hash = 0;
+    for (let i = 0; i < str.length; i++) {
+        hash = str.charCodeAt(i) + ((hash << 5) - hash);
+    }
+    const c = (hash & 0x00FFFFFF).toString(16).toUpperCase();
+    return "#" + "00000".substring(0, 6 - c.length) + c;
+  };
+
+  const getAvatarStyle = (name) => {
+    const color = stringToColor(name || 'Classroom');
+    return {
+      background: `linear-gradient(135deg, ${color}, ${color}99)`,
+      color: '#fff',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      fontWeight: 700,
+      fontSize: '0.9rem'
+    };
+  };
+
   const teacher = {
     id: classroom.teacher_id,
     name: classroom.teacher_name || 'Classroom Instructor',
@@ -42,7 +64,7 @@ const MembersSection = ({ classroomId, classroom }) => {
         <div className="members-category">
           <h3 className="cat-title">Classroom Host</h3>
           <div className="member-card host-card">
-            <div className="avatar host-avatar">
+            <div className="avatar host-avatar" style={getAvatarStyle(teacher.name)}>
               {getInitials(teacher.name)}
             </div>
             <div className="member-info">
@@ -56,9 +78,9 @@ const MembersSection = ({ classroomId, classroom }) => {
               <span className="member-role">Creator & Instructor</span>
             </div>
             <div className="member-actions">
-              <button className="action-btn" title="Send Message">
+              <a href={`mailto:${classroom.teacher_email || 'instructor@edu.com'}`} className="action-btn" title="Send Message">
                 <MessageSquare size={18} />
-              </button>
+              </a>
             </div>
           </div>
         </div>
@@ -72,7 +94,7 @@ const MembersSection = ({ classroomId, classroom }) => {
             ) : (
               students.map(student => (
                 <div key={student.id} className="member-card">
-                  <div className="avatar">
+                  <div className="avatar" style={getAvatarStyle(student.name)}>
                     {getInitials(student.name)}
                   </div>
                   <div className="member-info">
